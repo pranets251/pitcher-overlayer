@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pitcher Overlayer</title>
+<style>
+:root{--bg:#0b0d0c;--side:#f5f5f2;--ink:#13201b;--muted:#6c7772;--line:#d9deda}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Inter,system-ui,sans-serif}
+body{background:var(--bg)}
+main{height:100vh;display:grid;grid-template-columns:minmax(0,1fr) 350px;overflow:hidden}
+.stage{min-width:0;display:flex;align-items:center;padding:18px}
+.video-wrap{width:100%}
+video{display:block;width:100%;max-height:calc(100vh - 36px);aspect-ratio:16/9;object-fit:contain;background:#000;border-radius:8px}
+.sidebar{height:100vh;background:var(--side);color:var(--ink);padding:22px 25px;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable;display:flex;flex-direction:column}
+.section{padding-bottom:17px;margin-bottom:17px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:800;margin-bottom:8px}
+.index{display:flex;align-items:baseline;gap:11px;font-size:44px;font-weight:850;line-height:1;letter-spacing:-.04em}
+.index small{font-size:14px;color:var(--muted);letter-spacing:0;font-weight:750}
+.nav{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:13px}
+.nav button,form button{border:0;border-radius:7px;background:var(--ink);color:white;padding:10px;font-weight:800;cursor:pointer}
+.nav button:disabled{opacity:.35}
+.hint,.status{font-size:11px;color:var(--muted);margin-top:8px}
+.slow{display:flex;justify-content:space-between;font-size:14px;font-weight:750}
+.slow input{width:22px;height:22px;accent-color:var(--ink)}
+.upload-section{margin-top:auto;border:0;padding:0}
+.demo{background:white;border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:10px;font-size:11px;color:var(--muted)}
+.demo b{display:block;color:var(--ink)}
+.upload{display:grid;gap:7px}
+.upload input{font-size:11px;width:100%}
+.help{position:fixed;z-index:5;right:14px;top:14px;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:white;font-weight:850;cursor:pointer}
+.modal{position:fixed;z-index:10;inset:0;background:#07100bc7;display:none;align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}
+.card{max-width:660px;max-height:88vh;overflow:auto;background:white;color:var(--ink);border-radius:12px;padding:26px}
+.close{float:right;border:0;border-radius:50%;width:30px;height:30px;font-size:18px}
+.card h2{margin-top:0}.card h3{font-size:14px;margin:19px 0 5px}
+.card p,.card li{font-size:13px;line-height:1.55;color:#4f5c56}
+.card ul{padding-left:20px}
+@media(max-width:820px){html,body{height:auto;overflow:auto}main{height:auto;display:block;overflow:visible}.sidebar{height:auto;overflow:visible}.help{position:absolute}}
+</style>
+</head>
+<body>
+<button class="help" id="help">?</button>
+<main>
+  <section class="stage"><div class="video-wrap"><video id="video" controls playsinline autoplay muted loop></video></div></section>
+  <aside class="sidebar">
+    <section class="section">
+      <div class="eyebrow">Consecutive overlay</div>
+      <div class="index" id="index">—<small>/—</small></div>
+      <div class="nav"><button id="prev">← Previous</button><button id="next">Next →</button></div>
+      <div class="hint">Chronological order · one-second decision-point hold · use the ← and → arrow keys</div>
+    </section>
+    <section class="section">
+      <label class="slow"><span>Slow motion</span><input id="slow" type="checkbox"></label>
+    </section>
+    <section class="section upload-section">
+      <div class="demo"><b>Default demo: PitcherVideo.mov</b>This processed bullpen session loads for every new visitor.</div>
+      <div class="eyebrow">New session</div>
+      <form class="upload" id="upload">
+        <input name="video" type="file" accept="video/*" required>
+        <button>Process video</button>
+        <div class="status" id="status">Select a video to process.</div>
+      </form>
+    </section>
+  </aside>
+</main>
+<div class="modal" id="modal">
+  <div class="card">
+    <button class="close" id="close">×</button>
+    <h2>How the consecutive overlays are made</h2>
+    <h3>Video requirements</h3>
+    <ul>
+      <li>A front-facing, mostly stationary camera.</li>
+      <li>A 1280×720-like framing with the pitcher in approximately the same region.</li>
+      <li>A clearly visible pitcher wearing relatively bright clothing against a darker background.</li>
+      <li>The ball becoming visible shortly after release.</li>
+      <li>Similar delivery geometry across pitches.</li>
+      <li>One pitcher and one continuous camera setup per video.</li>
+    </ul>
+    <h3>What the tool does</h3>
+    <p>The video is split into individual deliveries using the existing pose-based method. It then creates one synchronized overlay for each adjacent pair in chronological order.</p>
+    <h3>How synchronization works</h3>
+    <p>Each motion-detected delivery is searched only within its likely pre-peak release window. The pitcher’s pose is compared with one common session reference, correcting whole-frame timing differences such as the earlier five-frame mismatch. The background is registered to reduce small camera shifts, and the two synchronized source clips are blended. A freeze is baked into the video at the approximately 150-millisecond hitter decision point; it lasts one second at real-time playback and four seconds in slow-motion mode.</p>
+    <h3>What the tool does not do</h3>
+    <p>It does not calculate ballpaths, tunneling scores, rankings, pitch classifications, or pitch numbers. It adds no labels, tracers, or baseball coloring. The videos are shown in chronological consecutive-pair order.</p>
+  </div>
+</div>
+<script>
+const $=s=>document.querySelector(s),params=new URLSearchParams(location.search);
+let clips=[],current=0,media='/demo/';
+function speed(){$('#video').playbackRate=$('#slow').checked?1:4}
+function show(i){
+  if(!clips.length)return;
+  current=(i+clips.length)%clips.length;
+  const clip=clips[current];
+  $('#video').src=media+clip.video+'?v=11';
+  $('#video').onloadedmetadata=()=>{speed();$('#video').play().catch(()=>{})};
+  $('#index').innerHTML=`${current+1}<small>/${clips.length}</small>`;
+  $('#prev').disabled=current===0;
+  $('#next').disabled=current===clips.length-1
+}
+$('#slow').onchange=speed;
+$('#prev').onclick=()=>show(current-1);
+$('#next').onclick=()=>show(current+1);
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft'&&current>0)show(current-1);
+  if(e.key==='ArrowRight'&&current<clips.length-1)show(current+1);
+  if(e.key==='Escape')$('#modal').classList.remove('open')
+});
+$('#help').onclick=()=>$('#modal').classList.add('open');
+$('#close').onclick=()=>$('#modal').classList.remove('open');
+$('#modal').onclick=e=>{if(e.target===$('#modal'))$('#modal').classList.remove('open')};
+const job=params.get('job'),resultUrl='/api/results'+(job?'?job='+job:'');
+fetch(resultUrl,{cache:'no-store'}).then(r=>r.json()).then(d=>{
+  media=d.media_base;clips=d.combinations||[];show(0)
+});
+$('#upload').onsubmit=async e=>{
+  e.preventDefault();
+  const button=e.target.querySelector('button');
+  button.disabled=true;
+  const response=await fetch('/api/analyze',{method:'POST',body:new FormData(e.target)});
+  const data=await response.json();
+  $('#status').textContent=data.message||data.error;
+  if(!response.ok){button.disabled=false;return}
+  const timer=setInterval(async()=>{
+    const state=await(await fetch('/api/status/'+data.job_id,{cache:'no-store'})).json();
+    $('#status').textContent=state.message;
+    if(state.status==='complete'){clearInterval(timer);location.href=state.result_url}
+    if(state.status==='error'){clearInterval(timer);button.disabled=false}
+  },3000)
+};
+</script>
+</body>
+</html>

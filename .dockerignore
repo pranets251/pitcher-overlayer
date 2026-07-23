@@ -1,0 +1,7 @@
+.venv
+jobs
+data
+__pycache__
+output
+vendor
+*.mov

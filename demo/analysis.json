@@ -1,0 +1,735 @@
+{
+  "source": "/Users/pranets251/Baseball/npbStuff/pitcher overlayer/data/PitcherVideo.mov",
+  "meta": {
+    "fps": 29.96961335217992,
+    "frames": 30039,
+    "duration": 1002.3152333333334,
+    "motion_threshold": 10.381654687499998
+  },
+  "delivery_candidates": [
+    3.103,
+    19.32,
+    33.834,
+    49.65,
+    64.665,
+    78.98,
+    93.194,
+    112.314,
+    128.931,
+    145.147,
+    160.863,
+    176.279,
+    197.4,
+    236.439,
+    245.849,
+    260.764,
+    279.283,
+    296.6,
+    314.919,
+    332.737,
+    350.755,
+    367.773,
+    385.49,
+    403.208,
+    423.129,
+    444.15,
+    468.675,
+    477.884,
+    495.101,
+    505.212,
+    514.021,
+    528.135,
+    553.861,
+    568.976,
+    584.492,
+    602.21,
+    620.629,
+    634.743,
+    650.459,
+    668.077,
+    685.594,
+    702.411,
+    722.532,
+    743.453,
+    766.376,
+    786.897,
+    813.124,
+    825.136,
+    854.465,
+    867.679,
+    875.086,
+    894.906,
+    918.23,
+    926.238,
+    943.756,
+    957.27,
+    974.787,
+    983.096,
+    1002.015
+  ],
+  "pitches": [
+    {
+      "pitch": 1,
+      "delivery_peak": 19.32,
+      "motion_candidate": 2
+    },
+    {
+      "pitch": 2,
+      "delivery_peak": 33.834,
+      "motion_candidate": 3
+    },
+    {
+      "pitch": 3,
+      "delivery_peak": 49.65,
+      "motion_candidate": 4
+    },
+    {
+      "pitch": 4,
+      "delivery_peak": 64.665,
+      "motion_candidate": 5
+    },
+    {
+      "pitch": 5,
+      "delivery_peak": 78.98,
+      "motion_candidate": 6
+    },
+    {
+      "pitch": 6,
+      "delivery_peak": 93.194,
+      "motion_candidate": 7
+    },
+    {
+      "pitch": 7,
+      "delivery_peak": 112.314,
+      "motion_candidate": 8
+    },
+    {
+      "pitch": 8,
+      "delivery_peak": 128.931,
+      "motion_candidate": 9
+    },
+    {
+      "pitch": 9,
+      "delivery_peak": 145.147,
+      "motion_candidate": 10
+    },
+    {
+      "pitch": 10,
+      "delivery_peak": 160.863,
+      "motion_candidate": 11
+    },
+    {
+      "pitch": 11,
+      "delivery_peak": 176.279,
+      "motion_candidate": 12
+    },
+    {
+      "pitch": 12,
+      "delivery_peak": 245.849,
+      "motion_candidate": 15
+    },
+    {
+      "pitch": 13,
+      "delivery_peak": 260.764,
+      "motion_candidate": 16
+    },
+    {
+      "pitch": 14,
+      "delivery_peak": 279.283,
+      "motion_candidate": 17
+    },
+    {
+      "pitch": 15,
+      "delivery_peak": 296.6,
+      "motion_candidate": 18
+    },
+    {
+      "pitch": 16,
+      "delivery_peak": 314.919,
+      "motion_candidate": 19
+    },
+    {
+      "pitch": 17,
+      "delivery_peak": 332.737,
+      "motion_candidate": 20
+    },
+    {
+      "pitch": 18,
+      "delivery_peak": 385.49,
+      "motion_candidate": 23
+    },
+    {
+      "pitch": 19,
+      "delivery_peak": 403.208,
+      "motion_candidate": 24
+    },
+    {
+      "pitch": 20,
+      "delivery_peak": 423.129,
+      "motion_candidate": 25
+    },
+    {
+      "pitch": 21,
+      "delivery_peak": 444.15,
+      "motion_candidate": 26
+    },
+    {
+      "pitch": 22,
+      "delivery_peak": 514.021,
+      "motion_candidate": 31
+    },
+    {
+      "pitch": 23,
+      "delivery_peak": 528.135,
+      "motion_candidate": 32
+    },
+    {
+      "pitch": 24,
+      "delivery_peak": 553.861,
+      "motion_candidate": 33
+    },
+    {
+      "pitch": 25,
+      "delivery_peak": 568.976,
+      "motion_candidate": 34
+    },
+    {
+      "pitch": 26,
+      "delivery_peak": 584.492,
+      "motion_candidate": 35
+    },
+    {
+      "pitch": 27,
+      "delivery_peak": 602.21,
+      "motion_candidate": 36
+    },
+    {
+      "pitch": 28,
+      "delivery_peak": 620.629,
+      "motion_candidate": 37
+    },
+    {
+      "pitch": 29,
+      "delivery_peak": 634.743,
+      "motion_candidate": 38
+    },
+    {
+      "pitch": 30,
+      "delivery_peak": 650.459,
+      "motion_candidate": 39
+    },
+    {
+      "pitch": 31,
+      "delivery_peak": 668.077,
+      "motion_candidate": 40
+    },
+    {
+      "pitch": 32,
+      "delivery_peak": 685.594,
+      "motion_candidate": 41
+    },
+    {
+      "pitch": 33,
+      "delivery_peak": 702.411,
+      "motion_candidate": 42
+    },
+    {
+      "pitch": 34,
+      "delivery_peak": 743.453,
+      "motion_candidate": 44
+    },
+    {
+      "pitch": 35,
+      "delivery_peak": 766.376,
+      "motion_candidate": 45
+    },
+    {
+      "pitch": 36,
+      "delivery_peak": 813.124,
+      "motion_candidate": 47
+    },
+    {
+      "pitch": 37,
+      "delivery_peak": 854.465,
+      "motion_candidate": 49
+    },
+    {
+      "pitch": 38,
+      "delivery_peak": 894.906,
+      "motion_candidate": 52
+    },
+    {
+      "pitch": 39,
+      "delivery_peak": 974.787,
+      "motion_candidate": 57
+    }
+  ],
+  "combinations": [
+    {
+      "pitch_a": 1,
+      "pitch_b": 2,
+      "video": "combination-001.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        500,
+        911
+      ]
+    },
+    {
+      "pitch_a": 2,
+      "pitch_b": 3,
+      "video": "combination-002.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        911,
+        1386
+      ]
+    },
+    {
+      "pitch_a": 3,
+      "pitch_b": 4,
+      "video": "combination-003.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        1386,
+        1822
+      ]
+    },
+    {
+      "pitch_a": 4,
+      "pitch_b": 5,
+      "video": "combination-004.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        1822,
+        2267
+      ]
+    },
+    {
+      "pitch_a": 5,
+      "pitch_b": 6,
+      "video": "combination-005.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        2267,
+        2705
+      ]
+    },
+    {
+      "pitch_a": 6,
+      "pitch_b": 7,
+      "video": "combination-006.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        2705,
+        3261
+      ]
+    },
+    {
+      "pitch_a": 7,
+      "pitch_b": 8,
+      "video": "combination-007.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        3261,
+        3739
+      ]
+    },
+    {
+      "pitch_a": 8,
+      "pitch_b": 9,
+      "video": "combination-008.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        3739,
+        4238
+      ]
+    },
+    {
+      "pitch_a": 9,
+      "pitch_b": 10,
+      "video": "combination-009.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        4238,
+        4709
+      ]
+    },
+    {
+      "pitch_a": 10,
+      "pitch_b": 11,
+      "video": "combination-010.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        4709,
+        5204
+      ]
+    },
+    {
+      "pitch_a": 11,
+      "pitch_b": 12,
+      "video": "combination-011.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        5204,
+        7261
+      ]
+    },
+    {
+      "pitch_a": 12,
+      "pitch_b": 13,
+      "video": "combination-012.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        7261,
+        7711
+      ]
+    },
+    {
+      "pitch_a": 13,
+      "pitch_b": 14,
+      "video": "combination-013.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        7711,
+        8272
+      ]
+    },
+    {
+      "pitch_a": 14,
+      "pitch_b": 15,
+      "video": "combination-014.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        8272,
+        8779
+      ]
+    },
+    {
+      "pitch_a": 15,
+      "pitch_b": 16,
+      "video": "combination-015.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        8779,
+        9324
+      ]
+    },
+    {
+      "pitch_a": 16,
+      "pitch_b": 17,
+      "video": "combination-016.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        9324,
+        9859
+      ]
+    },
+    {
+      "pitch_a": 17,
+      "pitch_b": 18,
+      "video": "combination-017.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        9859,
+        11438
+      ]
+    },
+    {
+      "pitch_a": 18,
+      "pitch_b": 19,
+      "video": "combination-018.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        11438,
+        11967
+      ]
+    },
+    {
+      "pitch_a": 19,
+      "pitch_b": 20,
+      "video": "combination-019.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        11967,
+        12570
+      ]
+    },
+    {
+      "pitch_a": 20,
+      "pitch_b": 21,
+      "video": "combination-020.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        12570,
+        13195
+      ]
+    },
+    {
+      "pitch_a": 21,
+      "pitch_b": 22,
+      "video": "combination-021.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        13195,
+        15287
+      ]
+    },
+    {
+      "pitch_a": 22,
+      "pitch_b": 23,
+      "video": "combination-022.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        15287,
+        15711
+      ]
+    },
+    {
+      "pitch_a": 23,
+      "pitch_b": 24,
+      "video": "combination-023.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        15711,
+        16481
+      ]
+    },
+    {
+      "pitch_a": 24,
+      "pitch_b": 25,
+      "video": "combination-024.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        16481,
+        16958
+      ]
+    },
+    {
+      "pitch_a": 25,
+      "pitch_b": 26,
+      "video": "combination-025.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        16958,
+        17426
+      ]
+    },
+    {
+      "pitch_a": 26,
+      "pitch_b": 27,
+      "video": "combination-026.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        17426,
+        17967
+      ]
+    },
+    {
+      "pitch_a": 27,
+      "pitch_b": 28,
+      "video": "combination-027.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        17967,
+        18489
+      ]
+    },
+    {
+      "pitch_a": 28,
+      "pitch_b": 29,
+      "video": "combination-028.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        18489,
+        18937
+      ]
+    },
+    {
+      "pitch_a": 29,
+      "pitch_b": 30,
+      "video": "combination-029.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        18937,
+        19415
+      ]
+    },
+    {
+      "pitch_a": 30,
+      "pitch_b": 31,
+      "video": "combination-030.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        19415,
+        19921
+      ]
+    },
+    {
+      "pitch_a": 31,
+      "pitch_b": 32,
+      "video": "combination-031.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        19921,
+        20447
+      ]
+    },
+    {
+      "pitch_a": 32,
+      "pitch_b": 33,
+      "video": "combination-032.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        20447,
+        20961
+      ]
+    },
+    {
+      "pitch_a": 33,
+      "pitch_b": 34,
+      "video": "combination-033.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        20961,
+        22166
+      ]
+    },
+    {
+      "pitch_a": 34,
+      "pitch_b": 35,
+      "video": "combination-034.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        22166,
+        22857
+      ]
+    },
+    {
+      "pitch_a": 35,
+      "pitch_b": 36,
+      "video": "combination-035.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        22857,
+        24254
+      ]
+    },
+    {
+      "pitch_a": 36,
+      "pitch_b": 37,
+      "video": "combination-036.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        24254,
+        25502
+      ]
+    },
+    {
+      "pitch_a": 37,
+      "pitch_b": 38,
+      "video": "combination-037.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        25502,
+        26727
+      ]
+    },
+    {
+      "pitch_a": 38,
+      "pitch_b": 39,
+      "video": "combination-038.mp4",
+      "decision_time_seconds": 3.403,
+      "decision_hold_realtime_seconds": 1.0,
+      "release_frames": [
+        26727,
+        29128
+      ]
+    }
+  ],
+  "synchronization": {
+    "method": "verified cached release",
+    "reference_frame": 9324,
+    "release_frames": {
+      "1": 500,
+      "2": 911,
+      "3": 1386,
+      "4": 1822,
+      "5": 2267,
+      "6": 2705,
+      "7": 3261,
+      "8": 3739,
+      "9": 4238,
+      "10": 4709,
+      "11": 5204,
+      "12": 7261,
+      "13": 7711,
+      "14": 8272,
+      "15": 8779,
+      "16": 9324,
+      "17": 9859,
+      "18": 11438,
+      "19": 11967,
+      "20": 12570,
+      "21": 13195,
+      "22": 15287,
+      "23": 15711,
+      "24": 16481,
+      "25": 16958,
+      "26": 17426,
+      "27": 17967,
+      "28": 18489,
+      "29": 18937,
+      "30": 19415,
+      "31": 19921,
+      "32": 20447,
+      "33": 20961,
+      "34": 22166,
+      "35": 22857,
+      "36": 24254,
+      "37": 25502,
+      "38": 26727,
+      "39": 29128
+    },
+    "pose_validation_cutoff": 0.3409,
+    "accepted_deliveries": 39,
+    "motion_candidates": 59
+  }
+}
