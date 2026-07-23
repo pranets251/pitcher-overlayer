@@ -28,5 +28,7 @@ The tool does not detect or track the baseball, infer pitch types, cluster paths
 
 This folder includes a Dockerfile and `render.yaml`. Deploy the folder as its own
 Git repository, then create a Render Blueprint from that repository. The Blueprint
-uses a paid Starter web service and a 5 GB persistent disk mounted at `/app/jobs`.
-Render supplies the public HTTPS `onrender.com` address after the first deploy.
+uses Render's free web-service tier. Render supplies the public HTTPS
+`onrender.com` address after the first deploy. Free instances use ephemeral storage,
+so uploaded and processed sessions can disappear after a restart or redeploy; the
+bundled default demo remains part of the application image.

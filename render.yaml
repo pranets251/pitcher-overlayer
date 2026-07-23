@@ -2,13 +2,9 @@ services:
   - type: web
     name: pitcher-overlayer
     runtime: docker
-    plan: starter
+    plan: free
     dockerfilePath: ./Dockerfile
     healthCheckPath: /health
     envVars:
       - key: PYTHONUNBUFFERED
         value: "1"
-    disk:
-      name: pitcher-overlayer-jobs
-      mountPath: /app/jobs
-      sizeGB: 5
