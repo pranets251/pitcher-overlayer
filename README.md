@@ -1,6 +1,6 @@
 # Pitcher Overlayer
 
-Video-first coaching tool for front-facing bullpen footage. It detects individual delivery windows, tracks each ballpath, infers movement-based pitch groups, and exports the strongest tunneling pair for every cross-type matchup. Pitcher pose matching inside a constrained release window corrects frame offsets, and background registration reduces small camera shifts before clips are blended.
+Video-first coaching tool for front-facing bullpen footage. It detects individual delivery windows, tracks each ballpath, infers movement-based pitch groups, and exports the strongest tunneling pair for every cross-type matchup. Pitcher pose matching provides coarse synchronization, a bounded ball-release pass corrects residual offsets of up to five frames, and background registration reduces small camera shifts before clips are blended.
 
 ## Run
 

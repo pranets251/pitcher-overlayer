@@ -186,6 +186,21 @@ else:
     ballpaths = detect_paths(
         video, [pitch["delivery_peak"] for pitch in pitches], model_dir)
 
+# Pose matching provides a reliable coarse synchronization point, but the ball can
+# leave the hand a few frames earlier or later relative to the same body pose.
+# Refine only within a tight five-frame window using the first frame of each
+# already-validated ball track. The bound prevents a stray detector hit from
+# replacing the pose anchor with an unrelated moment in the delivery.
+pose_release_frames = dict(release_frames)
+for path in ballpaths:
+    pitch_number = path["pitch"]
+    if not path.get("points") or pitch_number not in release_frames:
+        continue
+    pose_frame = release_frames[pitch_number]
+    tracked_frame = int(path["points"][0]["frame"])
+    correction = max(-5, min(5, tracked_frame - pose_frame))
+    release_frames[pitch_number] = pose_frame + correction
+
 
 def classify_ballpaths(paths):
     """Assign best-fit pitch names from front-view movement and relative flight time."""
@@ -434,9 +449,14 @@ data["pitch_type_counts"] = pitch_type_counts
 data["pitch_type_colors"] = GROUP_COLORS
 data["combinations"] = combinations
 data["synchronization"] = {
-    "method": sync_method,
+    "method": f"{sync_method} with bounded ball-release refinement",
     "reference_frame": reference_frame,
+    "pose_release_frames": pose_release_frames,
     "release_frames": release_frames,
+    "ball_release_corrections": {
+        pitch: release_frames[pitch] - pose_release_frames[pitch]
+        for pitch in release_frames
+    },
     "pose_validation_cutoff": round(float(pose_cutoff), 4),
     "accepted_deliveries": len(pitches),
     "motion_candidates": len(release_matches),
