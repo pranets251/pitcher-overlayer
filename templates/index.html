@@ -24,6 +24,15 @@ video{display:block;width:100%;max-height:calc(100vh - 36px);aspect-ratio:16/9;o
 .hint,.status{font-size:11px;color:var(--muted);margin-top:8px}
 .slow{display:flex;justify-content:space-between;font-size:14px;font-weight:750}
 .slow input{width:22px;height:22px;accent-color:var(--ink)}
+.matchups{display:grid;gap:7px}
+.matchup{display:flex;align-items:center;gap:8px;width:100%;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);padding:9px 10px;text-align:left;font-size:11px;font-weight:750;cursor:pointer}
+.matchup.active{border-color:var(--ink);box-shadow:inset 3px 0 var(--ink)}
+.type-dot{width:9px;height:9px;border-radius:50%;flex:none}
+.matchup-score{margin-left:auto;color:var(--muted);font-size:10px;font-weight:800}
+.movement-chart{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--line);border-radius:8px}
+.chart-legend{display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;margin-top:8px;font-size:10px;color:var(--muted)}
+.legend-item{display:flex;gap:5px;align-items:center}.legend-dot{width:8px;height:8px;border-radius:50%;flex:none}
+.chart-note{font-size:10px;line-height:1.4;color:var(--muted);margin-top:7px}
 .upload-section{margin-top:auto;border:0;padding:0}
 .demo{background:white;border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:10px;font-size:11px;color:var(--muted)}
 .demo b{display:block;color:var(--ink)}
@@ -46,13 +55,23 @@ video{display:block;width:100%;max-height:calc(100vh - 36px);aspect-ratio:16/9;o
   <section class="stage"><div class="video-wrap"><video id="video" controls playsinline autoplay muted loop></video></div></section>
   <aside class="sidebar">
     <section class="section">
-      <div class="eyebrow">Consecutive overlay</div>
+      <div class="eyebrow">Selected tunnel matchup</div>
       <div class="index" id="index">—<small>/—</small></div>
       <div class="nav"><button id="prev">← Previous</button><button id="next">Next →</button></div>
-      <div class="hint">Chronological order · one-second decision-point hold · use the ← and → arrow keys</div>
+      <div class="hint">One best pair per pitch-type matchup · one-second decision-point hold · use the ← and → arrow keys</div>
     </section>
     <section class="section">
       <label class="slow"><span>Slow motion</span><input id="slow" type="checkbox"></label>
+    </section>
+    <section class="section">
+      <div class="eyebrow">Choose a matchup · tunnel score / 100</div>
+      <div class="matchups" id="matchups"></div>
+    </section>
+    <section class="section">
+      <div class="eyebrow">Movement clusters</div>
+      <svg class="movement-chart" id="movement-chart" viewBox="0 0 340 360" role="img" aria-label="Pitch movement cluster chart"></svg>
+      <div class="chart-legend" id="chart-legend"></div>
+      <div class="chart-note">Indices are normalized within this video: 0 means no measured late deviation and values near 10 represent the session’s largest observed movement. They are not inches. Small dots are pitches; outlined dots are group centers.</div>
     </section>
     <section class="section upload-section">
       <div class="demo"><b>Default demo: PitcherVideo.mov</b>This processed bullpen session loads for every new visitor.</div>
@@ -68,7 +87,7 @@ video{display:block;width:100%;max-height:calc(100vh - 36px);aspect-ratio:16/9;o
 <div class="modal" id="modal">
   <div class="card">
     <button class="close" id="close">×</button>
-    <h2>How the consecutive overlays are made</h2>
+    <h2>How the movement-matchup overlays are made</h2>
     <h3>Video requirements</h3>
     <ul>
       <li>A front-facing, mostly stationary camera.</li>
@@ -79,26 +98,76 @@ video{display:block;width:100%;max-height:calc(100vh - 36px);aspect-ratio:16/9;o
       <li>One pitcher and one continuous camera setup per video.</li>
     </ul>
     <h3>What the tool does</h3>
-    <p>The video is split into individual deliveries using the existing pose-based method. It then creates one synchronized overlay for each adjacent pair in chronological order.</p>
+    <p>The video is split into individual deliveries using the existing pose-based method. A baseball detector calculates a ballpath for each accepted pitch. Paths are grouped by relative flight time, horizontal and vertical movement, and late departure, then assigned best-fit pitch-type labels.</p>
     <h3>How synchronization works</h3>
     <p>Each motion-detected delivery is searched only within its likely pre-peak release window. The pitcher’s pose is compared with one common session reference, correcting whole-frame timing differences such as the earlier five-frame mismatch. The background is registered to reduce small camera shifts, and the two synchronized source clips are blended. A freeze is baked into the video at the approximately 150-millisecond hitter decision point; it lasts one second at real-time playback and four seconds in slow-motion mode.</p>
     <h3>What the tool does not do</h3>
-    <p>It does not calculate ballpaths, tunneling scores, rankings, pitch classifications, or pitch numbers. It adds no labels, tracers, or baseball coloring. The videos are shown in chronological consecutive-pair order.</p>
+    <p>For each cross-type matchup, every eligible path pair receives a tunneling score out of 100. Decision-point proximity is weighted more heavily than separation after the decision point, though both are required for a strong score. Only the single strongest pair for that pitch-type matchup is rendered. The baseballs are tinted with the same group colors used in the movement chart; no tracer is added. Pitch labels remain video-based inferences, not verified pitch calls, because a front-view camera cannot observe grip, spin axis, or intent.</p>
   </div>
 </div>
 <script>
 const $=s=>document.querySelector(s),params=new URLSearchParams(location.search);
-let clips=[],current=0,media='/demo/';
+let allClips=[],clips=[],current=0,media='/demo/';
 function speed(){$('#video').playbackRate=$('#slow').checked?1:4}
 function show(i){
   if(!clips.length)return;
   current=(i+clips.length)%clips.length;
   const clip=clips[current];
-  $('#video').src=media+clip.video+'?v=11';
+  $('#video').src=media+clip.video+'?v=12';
   $('#video').onloadedmetadata=()=>{speed();$('#video').play().catch(()=>{})};
   $('#index').innerHTML=`${current+1}<small>/${clips.length}</small>`;
   $('#prev').disabled=current===0;
-  $('#next').disabled=current===clips.length-1
+  $('#next').disabled=current===clips.length-1;
+  document.querySelectorAll('.matchup').forEach(button=>button.classList.toggle('active',Number(button.dataset.index)===current))
+}
+function choose(button,index){
+  clips=allClips;
+  show(index)
+}
+function renderChart(paths,colorMap){
+  const points=(paths||[]).filter(path=>path.late_departure?.length===2);
+  if(!points.length)return;
+  const groups=[...new Set(points.map(path=>path.pitch_type))].sort();
+  const xs=points.map(path=>path.late_departure[0]),ys=points.map(path=>path.late_departure[1]);
+  const maxHorizontal=Math.max(...xs.map(Math.abs),.001);
+  const maxDrop=Math.max(...ys,.001);
+  const normalizeX=value=>Math.max(-10,Math.min(10,value/maxHorizontal*9));
+  const normalizeY=value=>Math.max(0,Math.min(10,value/maxDrop*9));
+  const left=64,top=54,size=240;
+  const sx=value=>left+(normalizeX(value)+10)/20*size;
+  const sy=value=>top+normalizeY(value)/10*size;
+  const svg=[
+    '<text x="170" y="21" text-anchor="middle" font-size="15" font-weight="700" fill="#13201b">Movement Chart</text>',
+    '<text x="170" y="38" text-anchor="middle" font-size="8.5" fill="#69736e">normalized video indices · 0 = no late deviation</text>',
+    `<rect x="${left}" y="${top}" width="${size}" height="${size}" fill="#fbfbfa" stroke="#8d9691" stroke-width=".8"/>`
+  ];
+  for(let tick=-10;tick<=10;tick+=2){
+    const gx=left+(tick+10)/20*size;
+    const axis=tick===0?'#13201b':'#bcc3bf',width=tick===0?'1.35':'.65';
+    svg.push(`<line x1="${gx}" y1="${top}" x2="${gx}" y2="${top+size}" stroke="${axis}" stroke-width="${width}"/>`);
+    svg.push(`<text x="${gx}" y="${top+size+14}" text-anchor="middle" font-size="8" fill="#69736e">${tick}</text>`);
+  }
+  for(let tick=0;tick<=10;tick+=2){
+    const gy=top+tick/10*size;
+    const axis=tick===0?'#13201b':'#bcc3bf',width=tick===0?'1.35':'.65';
+    svg.push(`<line x1="${left}" y1="${gy}" x2="${left+size}" y2="${gy}" stroke="${axis}" stroke-width="${width}"/>`);
+    svg.push(`<text x="${left-7}" y="${gy+3}" text-anchor="end" font-size="8" fill="#69736e">${tick}</text>`)
+  }
+  svg.push(
+    `<text x="${left+size/2}" y="329" text-anchor="middle" font-size="9" fill="#56615b">Horizontal movement index</text>`,
+    `<text x="${left+size/2}" y="343" text-anchor="middle" font-size="8" fill="#69736e">camera-left ← 0 → camera-right</text>`,
+    `<text x="16" y="${top+size/2}" text-anchor="middle" font-size="9" fill="#56615b" transform="rotate(-90 16 ${top+size/2})">Late drop index · 0 = none · more drop ↓</text>`,
+    '<text x="170" y="356" text-anchor="middle" font-size="8" fill="#7a847f">scaled within this session · not inches</text>'
+  );
+  groups.forEach(group=>{
+    const groupPoints=points.filter(path=>path.pitch_type===group),color=colorMap[group];
+    groupPoints.forEach(path=>svg.push(`<circle cx="${sx(path.late_departure[0]).toFixed(1)}" cy="${sy(path.late_departure[1]).toFixed(1)}" r="3.2" fill="${color}" fill-opacity=".48"><title>${group}</title></circle>`));
+    const mx=groupPoints.reduce((sum,path)=>sum+path.late_departure[0],0)/groupPoints.length;
+    const my=groupPoints.reduce((sum,path)=>sum+path.late_departure[1],0)/groupPoints.length;
+    svg.push(`<circle cx="${sx(mx).toFixed(1)}" cy="${sy(my).toFixed(1)}" r="6.8" fill="${color}" stroke="#13201b" stroke-width="1.4"><title>${group} center</title></circle>`)
+  });
+  $('#movement-chart').innerHTML=svg.join('');
+  $('#chart-legend').innerHTML=groups.map(group=>`<div class="legend-item"><span class="legend-dot" style="background:${colorMap[group]}"></span>${group}</div>`).join('')
 }
 $('#slow').onchange=speed;
 $('#prev').onclick=()=>show(current-1);
@@ -113,7 +182,11 @@ $('#close').onclick=()=>$('#modal').classList.remove('open');
 $('#modal').onclick=e=>{if(e.target===$('#modal'))$('#modal').classList.remove('open')};
 const job=params.get('job'),resultUrl='/api/results'+(job?'?job='+job:'');
 fetch(resultUrl,{cache:'no-store'}).then(r=>r.json()).then(d=>{
-  media=d.media_base;clips=d.combinations||[];show(0)
+  media=d.media_base;allClips=d.combinations||[];clips=allClips;
+  $('#matchups').innerHTML=allClips.map((clip,index)=>`<button class="matchup" data-index="${index}"><span class="type-dot" style="background:${clip.color_a}"></span>${clip.type_a}<span>×</span><span class="type-dot" style="background:${clip.color_b}"></span>${clip.type_b}<span class="matchup-score">${clip.tunnel_score}/100</span></button>`).join('');
+  document.querySelectorAll('.matchup').forEach(button=>button.onclick=()=>choose(button,Number(button.dataset.index)));
+  renderChart(d.ballpaths,d.pitch_type_colors||{});
+  show(0)
 });
 $('#upload').onsubmit=async e=>{
   e.preventDefault();

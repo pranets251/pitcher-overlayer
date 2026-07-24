@@ -4,6 +4,7 @@ import hashlib
 import json
 import os
 import subprocess
+import sys
 import threading
 import uuid
 from pathlib import Path
@@ -93,13 +94,13 @@ def run_analysis(job_id: str, video: Path, content_hash: str):
     result = output / "analysis.json"
     try:
         set_job(job_id, status="running", message="Splitting video into individual pitches")
-        subprocess.run([str(ROOT/".venv/bin/python"), str(ROOT/"analyze.py"), str(video),
+        subprocess.run([sys.executable, str(ROOT/"analyze.py"), str(video),
                         "--out", str(result)], check=True, cwd=ROOT)
-        set_job(job_id, status="running", message="Synchronizing consecutive pitches")
+        set_job(job_id, status="running", message="Tracking ballpaths and selecting the best pitch-type matchups")
         env = os.environ.copy()
         env.update(PITCHER_RESULTS=str(result), PITCHER_OUTPUT_DIR=str(output),
                    PITCHER_CALIBRATION=str(CALIBRATIONS / f"{content_hash}.json"))
-        subprocess.run([str(ROOT/".venv/bin/python"), str(ROOT/"export_pairs.py")],
+        subprocess.run([sys.executable, str(ROOT/"export_pairs.py")],
                        check=True, cwd=ROOT, env=env)
         set_job(job_id, status="complete", message="Analysis complete", result_url=f"/?job={job_id}")
     except Exception as exc:

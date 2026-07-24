@@ -1,6 +1,6 @@
 # Pitcher Overlayer
 
-Local, video-first coaching tool for front-facing bullpen footage. It detects individual delivery windows and exports one synchronized overlay for each consecutive pair in chronological order. Pitcher pose matching inside a constrained release window corrects frame offsets, and background registration reduces small camera shifts before clips are blended.
+Video-first coaching tool for front-facing bullpen footage. It detects individual delivery windows, tracks each ballpath, infers movement-based pitch groups, and exports the strongest tunneling pair for every cross-type matchup. Pitcher pose matching inside a constrained release window corrects frame offsets, and background registration reduces small camera shifts before clips are blended.
 
 ## Run
 
@@ -22,7 +22,7 @@ This workload is CPU/GPU- and storage-intensive. Add authentication, request-rat
 
 ## Interpretation
 
-The tool does not detect or track the baseball, infer pitch types, cluster paths, calculate tunneling scores, rank pairs, add tracers, or color the baseball.
+Pitch types are movement-based estimates from front-view video, not verified pitch calls. The tunneling score is out of 100 and prioritizes proximity at the approximate hitter decision point while retaining substantial weight for separation afterward. The movement chart uses video-normalized indices rather than inches. No visual tracer is added; detected baseballs are colored by inferred movement group.
 
 ## Deploy on Render
 
